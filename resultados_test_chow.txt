@@ -1,0 +1,25 @@
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:        Produccion_BPDC   R-squared:                       0.739
+Model:                            OLS   Adj. R-squared:                  0.737
+Method:                 Least Squares   F-statistic:                     393.8
+Date:                Wed, 18 Nov 2026   Prob (F-statistic):           2.17e-42
+Time:                        01:33:56   Log-Likelihood:                -1703.5
+No. Observations:                 141   AIC:                             3411.
+Df Residuals:                     139   BIC:                             3417.
+Df Model:                           1                                         
+Covariance Type:            nonrobust                                         
+===============================================================================
+                  coef    std err          t      P>|t|      [0.025      0.975]
+-------------------------------------------------------------------------------
+const        8.982e+05   5420.754    165.692      0.000    8.87e+05    9.09e+05
+dummy_covid -1.446e+05   7288.228    -19.845      0.000   -1.59e+05    -1.3e+05
+==============================================================================
+Omnibus:                       39.600   Durbin-Watson:                   0.188
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):               68.887
+Skew:                           1.328   Prob(JB):                     1.10e-15
+Kurtosis:                       5.161   Cond. No.                         2.76
+==============================================================================
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
