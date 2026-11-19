@@ -89,6 +89,7 @@ elif opcion == "Proyección por precio":
     **No es una predicción causal**, sino una proyección basada en el modelo VAR(1) estimado.
     """)
 
+
     # 1. Slider para el precio supuesto
     precio_supuesto = st.slider("Selecciona un precio Brent supuesto (USD/barril):", 
                                 min_value=20, max_value=150, value=70, step=1)
@@ -116,25 +117,25 @@ elif opcion == "Proyección por precio":
         diferencia_anterior = ultima_dif.copy()
 
         for t in range(12):
-            # Calcular la nueva diferencia con el VAR(1)
+            # 1. Guardar el nivel previo ANTES de hacer cualquier cálculo
+            nivel_previo = nivel_actual.copy()
+
+            # 2. Calcular la nueva diferencia con el VAR(1)
             cambio = intercepto + coefs @ diferencia_anterior
             
-            # Reconstruir el nivel
+            # 3. Reconstruir el nivel
             nivel_actual = nivel_actual + cambio
             
-            # Forzar el precio Brent al valor del escenario
+            # 4. Forzar el precio Brent al valor del escenario
             nivel_actual[1] = precio_supuesto
             
-            # Guardar los resultados
+            # 5. Guardar los resultados
             pronosticos.append(nivel_actual.copy())
             
-            # Actualizar la diferencia para el siguiente paso
-            # La nueva diferencia es el cambio que acabamos de calcular
-            diferencia_anterior = nivel_actual - (nivel_actual - cambio) # Esto es simplemente 'cambio'
-            # Pero para mantener la consistencia con el modelo, usamos el cambio calculado
-            diferencia_anterior = cambio.copy()
-            # NOTA: Si forzamos el precio, debemos asegurar que la diferencia de precio también se actualice
-            # Para simplificar, usamos el cambio calculado por el VAR antes de forzar el precio.
+            # 6. Actualizar la diferencia para el siguiente mes (La corrección del Anexo A)
+            diferencia_anterior = nivel_actual - nivel_previo
+
+
 
         # Crear DataFrame con los resultados
         resultado_escenario = pd.DataFrame(pronosticos, columns=columnas)
